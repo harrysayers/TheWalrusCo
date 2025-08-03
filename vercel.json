@@ -1,0 +1,9 @@
+{
+ "redirects": [
+   {
+     "source": "/a-test-story",
+     "destination": "/a-test-story/",
+     "permanent": true
+   }
+ ]
+}
