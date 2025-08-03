@@ -1,9 +1,0 @@
-{
-  "redirects": [
-    {
-      "source": "/([a-zA-Z0-9-]+)$",
-      "destination": "/$1/",
-      "permanent": true
-    }
-  ]
-}
