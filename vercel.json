@@ -1,8 +1,8 @@
 {
  "redirects": [
    {
-     "source": "/a-test-story",
-     "destination": "/a-test-story/",
+     "source": "/stories/a-test-story",
+     "destination": "/stories/a-test-story/",
      "permanent": true
    }
  ]
