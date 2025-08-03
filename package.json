@@ -1,5 +1,5 @@
 {
-  "name": "retrograde-ring",
+  "name": "the-walrus-co",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -9,6 +9,8 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@fontsource-variable/roboto": "^5.2.6",
+    "@fontsource/barrio": "^5.2.6",
     "astro": "^5.12.8"
   }
 }

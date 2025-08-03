@@ -1,0 +1,73 @@
+---
+import Logo from '../assets/logo.svg';
+import { Image } from 'astro:assets';
+---
+
+<div class="container">
+    <p>A data journalism publication exploring all facets of culture and society 🏴‍☠️ 📰</p>
+    <Image src={Logo} alt="" />
+    <button>
+        <span>Subscribe</span>
+    </button>
+</div>
+
+<style>
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin: 0 auto;
+        padding: 50px 100px 0px 100px;
+        box-sizing: border-box;
+        background-color: #181A1E; /* Dark background like in image */
+    }
+
+    /* Left item (description) */
+    .container p {
+        flex: 1;
+        margin: 0;
+        color: #fff;
+        font-size: 16px;
+        text-align: left;
+        max-width: 340px;
+    }
+
+    /* Center item (logo) - this will always stay centered */
+    .container img {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 60px; /* Adjust logo size as needed */
+        width: auto;
+    }
+
+    /* Right item (button) */
+    .container button {
+        flex: 1;
+        margin-left: auto;
+        padding: 5px;
+        background-color: #EEF0E0;
+        border: none;
+        color: #181A1E;
+        font-size: 14px;
+        cursor: pointer;
+        max-width: 126px;
+        font-family: 'Barrio', system-ui;
+    }
+
+    .container button span{
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: 1px #181A1E solid;
+        padding: 5px 15px;
+        box-sizing: border-box;
+    }
+
+    .container button:hover {
+        background-color: #ccc;
+        color: #2a2a2a;
+    }
+
+</style>

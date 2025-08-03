@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/story1/(.*)",
+      "destination": "https://twc-test-story-vert.vercel.app/"
+    }
+  ]
+}
