@@ -59,6 +59,45 @@ const storyNumber = 1; // First story is #1
     .textContainer p {
         margin: 5px 0;
         color: #EEF0E0;
+    }
 
+    @media (max-width: 768px) {
+        .container {
+            flex-direction: column;
+            padding: 50px 20px 30px 20px;
+            gap: 20px;
+        }
+
+        .imgContainer {
+            height: 300px;
+        }
+
+        .textContainer h1 {
+            font-size: 1.5rem;
+            margin: 15px 0 8px 0;
+        }
+
+        .textContainer p {
+            font-size: 0.9rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .container {
+            padding: 30px 15px 20px 15px;
+            gap: 15px;
+        }
+
+        .imgContainer {
+            height: 250px;
+        }
+
+        .textContainer h1 {
+            font-size: 1.3rem;
+        }
+
+        .textContainer p {
+            font-size: 0.85rem;
+        }
     }
 </style>
