@@ -1,8 +1,50 @@
-export const stories = [{
-  id: "a-test-story",
-  date: "3rd Aug 2025", 
-  title: "New Story Title!",
-  description: "Story description...",
-  image: "/a-test-story/preview.jpg",
-  url: "/a-test-story",
-}];
+export const stories = [
+  {
+    id: "a-test-story",
+    date: "3rd Aug 2025", 
+    title: "A story of love songs",
+    description: "Love songs have a long history in put the world into the mood ",
+    image: "/stories/a-test-story/preview.png",
+    url: "/a-test-story",
+  },
+  {
+    id: "a-test-story",
+    date: "3rd Aug 2025", 
+    title: "A story of love songs",
+    description: "Love songs have a long history in put the world into the mood ",
+    image: "/stories/a-test-story/preview.png",
+    url: "/a-test-story",
+  },
+  {
+    id: "a-test-story",
+    date: "3rd Aug 2025", 
+    title: "A story of love songs",
+    description: "Love songs have a long history in put the world into the mood. No really, they do. Love is in the air and the air is running thick with it.",
+    image: "/stories/a-test-story/preview.png",
+    url: "/a-test-story",
+  },
+  {
+    id: "a-test-story",
+    date: "3rd Aug 2025", 
+    title: "A story of love songs",
+    description: "Story description...",
+    image: "/stories/a-test-story/preview.png",
+    url: "/a-test-story",
+  },
+  {
+    id: "a-test-story",
+    date: "3rd Aug 2025", 
+    title: "A story of love songs",
+    description: "Story description...",
+    image: "/stories/a-test-story/preview.png",
+    url: "/a-test-story",
+  },
+  {
+    id: "a-test-story",
+    date: "3rd Aug 2025", 
+    title: "A story of love songs",
+    description: "Story description...",
+    image: "/stories/a-test-story/preview.png",
+    url: "/a-test-story",
+  }
+];

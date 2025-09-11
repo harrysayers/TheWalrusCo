@@ -1,0 +1,107 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/header.astro';
+import Footer from '../components/footer.astro';
+---
+
+<Layout>
+	<Header/>
+	<main>
+		<section class="hero">
+			<div class="container">
+				<h1>About us</h1>
+			</div>
+		</section>
+
+		<section class="content">
+			<div class="container">
+				<div class="prose">
+					<p>The Walrus Co was set up by the team at <a href="https://www.axamattic.com" target="_blank">Axamattic</a> to showcase the power of design in visualising information. While Axamattic transforms complex data into platforms, products and tools, The Walrus Co gives us an outlet to work on fun, niche stories that explore culture and society.</p>
+									
+			
+					<h2>How to reach us</h2>
+					<p>If you want to work with us or just have some queries you can get in touch with Harry (Founder) below.</p>
+					<p><a href="mailto:harry@axamattic.com">harry@axamattic.com</a></p>
+				</div>
+			</div>
+		</section>
+	</main>
+	<Footer/>
+</Layout>
+
+<style>
+	main {
+		color: #fff;
+	}
+
+	.container {
+		max-width: 720px;
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	.hero {
+		padding: 120px 0 60px;
+		text-align: center;
+	}
+
+	.hero h1 {
+		font-family: 'Barrio', cursive;
+		font-size: 2.5rem;
+		margin-bottom: 16px;
+		color: #fff;
+		font-weight: normal;
+	}
+
+	.hero-text {
+		font-size: 1.25rem;
+		color: #BDC3C7;
+		margin: 0;
+		line-height: 1.5;
+	}
+
+	.content {
+		padding: 60px 0 120px;
+	}
+
+	.prose {
+		font-size: 1.125rem;
+		line-height: 1.7;
+		color: #BDC3C7;
+	}
+
+	.prose p {
+		margin-bottom: 24px;
+	}
+
+	.prose h2 {
+		font-family: 'Barrio', cursive;
+		font-size: 1.5rem;
+		color: #fff;
+		margin: 48px 0 24px 0;
+		font-weight: normal;
+	}
+
+	.prose a {
+		color: #3498DB;
+		text-decoration: none;
+	}
+
+	.prose a:hover {
+		text-decoration: underline;
+	}
+
+	@media (max-width: 768px) {
+		.hero h1 {
+			font-size: 2rem;
+		}
+
+		.hero-text {
+			font-size: 1.125rem;
+		}
+
+		.container {
+			padding: 0 20px;
+		}
+	}
+</style>

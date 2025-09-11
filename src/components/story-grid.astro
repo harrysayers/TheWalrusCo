@@ -1,0 +1,102 @@
+---
+import { stories } from '../../stories.js';
+
+// Get all stories except the first one (which is featured)
+const gridStories = stories.slice(1);
+---
+
+<div class="grid-container">
+    <div class="grid">
+        {gridStories.map((story, index) => (
+            <a href={`/stories${story.url}/`} class="story-card">
+                <div class="story-content">
+                    <div class="story-meta">
+                        <span class="story-id">#{index + 2}</span>
+                        <span class="story-date">{story.date}</span>
+                    </div>
+                </div>
+                <div class="story-image">
+                    <img src={story.image} alt={story.title} />
+                </div>
+                <div class="story-content">
+                    <h3>{story.title}</h3>
+                    <p>{story.description}</p>
+                </div>
+            </a>
+        ))}
+    </div>
+</div>
+
+<style>
+    .grid-container {
+        padding: 50px 100px;
+        box-sizing: border-box;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 40px;
+    }
+
+    .story-card {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .story-card:hover {
+    }
+
+    .story-image {
+        width: 100%;
+        height: 350px;
+        overflow: hidden;
+        border-radius: 10px;
+    }
+
+    .story-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .story-content {
+        padding: 0px;
+    }
+
+    .story-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        color: #EEF0E0;
+        margin-bottom: 10px;
+    }
+
+    .story-card h3 {
+        margin: 10px 0;
+        font-size: 26px;
+        line-height: 1.4;
+        color: #EEF0E0;
+    }
+
+    .story-card p {
+        margin: 10px 0 0 0;
+        color: #EEF0E0;
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+        .grid-container {
+            padding: 30px 20px;
+        }
+        
+        .grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+    }
+</style>

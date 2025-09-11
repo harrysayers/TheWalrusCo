@@ -1,15 +1,32 @@
 ---
 import '@fontsource-variable/roboto';
 import '@fontsource/barrio';
+import { SEO } from 'astro-seo';
 ---
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>The Walrus Co</title>
+		<SEO
+			title="The Walrus Co"
+			description="Premium content and stories"
+			openGraph={{
+				basic: {
+					title: "The Walrus Co",
+					type: "website",
+					image: "/favicon.svg",
+				}
+			}}
+			extend={{
+				link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
+				meta: [
+					{ name: "twitter:title", content: "The Walrus Co" },
+					{ name: "twitter:description", content: "Premium content and stories" },
+				],
+			}}
+		/>
 	</head>
 	<body>
 		<slot />

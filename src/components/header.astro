@@ -5,7 +5,9 @@ import { Image } from 'astro:assets';
 
 <div class="container">
     <p>A data journalism publication exploring all facets of culture and society 🏴‍☠️ 📰</p>
-    <Image src={Logo} alt="" />
+    <a href="/" class="logo-link">
+        <Image src={Logo} alt="" />
+    </a>
     <button>
         <span>Subscribe</span>
     </button>
@@ -34,12 +36,17 @@ import { Image } from 'astro:assets';
     }
 
     /* Center item (logo) - this will always stay centered */
-    .container img {
+    .logo-link {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
+        text-decoration: none;
+    }
+
+    .logo-link img {
         height: 60px; /* Adjust logo size as needed */
         width: auto;
+        display: block;
     }
 
     /* Right item (button) */
