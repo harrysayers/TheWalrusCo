@@ -1,4 +1,5 @@
 ---
+import PostHog from '../components/posthog.astro';
 import '@fontsource-variable/roboto';
 import '@fontsource/barrio';
 import { SEO } from 'astro-seo';
@@ -31,6 +32,7 @@ import { SEO } from 'astro-seo';
 				],
 			}}
 			/>
+			<PostHog />
 	</head>
 	<body>
 		<slot />
