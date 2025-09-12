@@ -6,7 +6,7 @@ const featuredStory = stories[0];
 const storyNumber = 1; // First story is #1
 ---
 
-<a href={`/stories${featuredStory.url}/`} class="container" onclick={`posthog.capture('story_click', { story_title: '${featuredStory.title}', story_url: '${featuredStory.url}' })`}>
+<a href={`/stories${featuredStory.url}/`} class="container featured-story-link">
     <div class="imgContainer">
         <img src={featuredStory.image} alt={featuredStory.title}/>
     </div>
@@ -101,3 +101,18 @@ const storyNumber = 1; // First story is #1
         }
     }
 </style>
+
+<script>
+    const featuredStoryLink = document.querySelector('.featured-story-link');
+    if (featuredStoryLink) {
+        featuredStoryLink.addEventListener('click', () => {
+            if (typeof window.posthog !== 'undefined') {
+                window.posthog.capture('story_click', {
+                    story_title: featuredStoryLink.querySelector('h1')?.textContent || 'Unknown',
+                    story_type: 'featured',
+                    story_url: featuredStoryLink.getAttribute('href')
+                });
+            }
+        });
+    }
+</script>

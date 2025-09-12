@@ -8,7 +8,7 @@ const gridStories = stories.slice(1);
 <div class="grid-container">
     <div class="grid">
         {gridStories.map((story, index) => (
-            <a href={`/stories${story.url}/`} class="story-card" onclick={`posthog.capture('story_click', { story_title: '${story.title}', story_url: '${story.url}' })`}>
+            <a href={`/stories${story.url}/`} class="story-card grid-story-link" data-story-title={story.title} data-story-url={story.url}>
                 <div class="story-content">
                     <div class="story-meta">
                         <span class="story-id">#{index + 2}</span>
@@ -100,3 +100,18 @@ const gridStories = stories.slice(1);
         }
     }
 </style>
+
+<script>
+    const gridStoryLinks = document.querySelectorAll('.grid-story-link');
+    gridStoryLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (typeof window.posthog !== 'undefined') {
+                window.posthog.capture('story_click', {
+                    story_title: link.dataset.storyTitle || 'Unknown',
+                    story_type: 'grid',
+                    story_url: link.dataset.storyUrl || link.getAttribute('href')
+                });
+            }
+        });
+    });
+</script>
