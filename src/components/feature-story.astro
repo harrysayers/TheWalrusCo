@@ -6,7 +6,7 @@ const featuredStory = stories[0];
 const storyNumber = 1; // First story is #1
 ---
 
-<a href={`/stories${featuredStory.url}/`} class="container">
+<a href={`/stories${featuredStory.url}/`} class="container" onclick={`posthog.capture('story_click', { story_title: '${featuredStory.title}', story_url: '${featuredStory.url}' })`}>
     <div class="imgContainer">
         <img src={featuredStory.image} alt={featuredStory.title}/>
     </div>

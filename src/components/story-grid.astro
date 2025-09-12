@@ -8,7 +8,7 @@ const gridStories = stories.slice(1);
 <div class="grid-container">
     <div class="grid">
         {gridStories.map((story, index) => (
-            <a href={`/stories${story.url}/`} class="story-card">
+            <a href={`/stories${story.url}/`} class="story-card" onclick={`posthog.capture('story_click', { story_title: '${story.title}', story_url: '${story.url}' })`}>
                 <div class="story-content">
                     <div class="story-meta">
                         <span class="story-id">#{index + 2}</span>
