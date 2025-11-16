@@ -1,6 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import node from '@astrojs/node';
+import vercel from '@astrojs/vercel/serverless';
 
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
@@ -9,9 +9,7 @@ import react from '@astrojs/react';
 export default defineConfig({
   output: 'server',
 
-  adapter: node({
-      mode: 'standalone'
-  }),
+  adapter: vercel(),
 
   site: 'https://www.thewalrusco.net',
 
