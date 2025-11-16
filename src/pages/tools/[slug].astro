@@ -9,7 +9,20 @@ if (!Astro.url.pathname.endsWith('/')) {
 }
 
 // Read the HTML file from the public directory
-const filePath = `./public/tools/${slug}/index.html`;
+// Use different paths for dev vs production
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// In production (Vercel), public files are in dist/client
+// In dev, they're in public/
+const publicDir = import.meta.env.PROD
+  ? join(__dirname, '../../client')
+  : join(process.cwd(), 'public');
+
+const filePath = join(publicDir, 'tools', slug, 'index.html');
 
 try {
   const fs = await import('node:fs/promises');
