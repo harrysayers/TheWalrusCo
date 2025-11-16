@@ -1,74 +1,237 @@
 ---
-import { stories } from '../../stories.js';
+import { getCollection } from 'astro:content';
 
-// Get the newest story (first in array)
-const featuredStory = stories[0];
-const storyNumber = 1; // First story is #1
+// Get all stories from Content Collections
+const allStories = await getCollection('stories');
+
+// Sort by featured status
+const sortedStories = allStories.sort((a, b) => {
+    if (a.data.featured && !b.data.featured) return -1;
+    if (!a.data.featured && b.data.featured) return 1;
+    return 0;
+});
+
+// Get the first three stories (or however many we have)
+const featuredStory = sortedStories[0];
+const secondStory = sortedStories[1] || sortedStories[0]; // Fallback to first if not enough
+const thirdStory = sortedStories[2] || sortedStories[0];  // Fallback to first if not enough
+
+// Only render if we have at least one story
+if (!featuredStory) return;
 ---
 
-<a href={`/stories${featuredStory.url}/`} class="container featured-story-link">
-    <div class="imgContainer">
-        <img src={featuredStory.image} alt={featuredStory.title}/>
+<div class="container">
+    <div class="tagline">
+        <p>Where data tells the truth</p>
     </div>
-    <div class="textContainer">
-        <div class="infoContainer">
-            <p>#{storyNumber}</p>
-            <p>{featuredStory.date}</p>
-        </div>
-        <div>
-            <h1>{featuredStory.title}</h1>
-            <p>{featuredStory.description}</p>
+    <div class="stories-grid">
+        <a href={`/stories/${featuredStory.slug}/`} class="featured-story-link main-story">
+            <div class="imgContainer">
+                <img src={featuredStory.data.image} alt={featuredStory.data.title}/>
+            </div>
+            <div class="textContainer">
+                <div class="infoContainer">
+                    <p>{featuredStory.data.type}</p>
+                </div>
+                <div>
+                    <h1>{featuredStory.data.title}</h1>
+                    <p>{featuredStory.data.description}</p>
+                </div>
+            </div>
+        </a>
+        <div class="side-stories">
+            <a href={`/stories/${secondStory.slug}/`} class="featured-story-link side-story">
+                <div class="imgContainer">
+                    <img src={secondStory.data.image} alt={secondStory.data.title}/>
+                </div>
+                <div class="textContainer">
+                    <div class="infoContainer">
+                        <p>{secondStory.data.type}</p>
+                    </div>
+                    <div>
+                        <h1>{secondStory.data.title}</h1>
+                    </div>
+                </div>
+            </a>
+            <a href={`/stories/${thirdStory.slug}/`} class="featured-story-link side-story">
+                <div class="imgContainer">
+                    <img src={thirdStory.data.image} alt={thirdStory.data.title}/>
+                </div>
+                <div class="textContainer">
+                    <div class="infoContainer">
+                        <p>{thirdStory.data.type}</p>
+                    </div>
+                    <div>
+                        <h1>{thirdStory.data.title}</h1>
+                    </div>
+                </div>
+            </a>
         </div>
     </div>
-</a>
+
+</div>
+
 
 <style>
     .container{
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        justify-content: center;
         width: 100%;
-        padding: 100px 100px 50px 100px;
+        padding: 100px 150px 100px 150px;
         box-sizing: border-box;
         gap: 30px;
         text-decoration: none;
         color: inherit;
+        margin-top: 30px;
     }
-    .container:hover {
+
+    .tagline{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .tagline p{
+        color: #D45A1D;
+        font-size: 20px;
+        font-style: italic;
+        font-weight: 400;
+    }
+
+    .stories-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    .main-story {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .side-stories {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+    }
+
+    .featured-story-link {
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .featured-story-link:hover {
         opacity: 0.9;
     }
-    .imgContainer{
+
+    .main-story .imgContainer {
         width: 100%;
-        height: 450px;
     }
+
+    .side-story{
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+    }
+
+    .side-story .imgContainer {
+        width: 260px;
+        min-width: 260px;
+        height: 197px;
+    }
+
     .imgContainer img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 10px;
-
+        border-radius: 0px;
     }
+
     .textContainer .infoContainer{
         display: flex;
         flex-direction: row;
         justify-content: space-between;
     }
+
     .textContainer h1 {
         margin: 20px 0 10px 0;
-        color: #EEF0E0;
-    }
-    .textContainer p {
-        margin: 5px 0;
-        color: #EEF0E0;
+        color: #1F2126;
+        font-weight: 500;
     }
 
+    .main-story .textContainer p {
+        margin-top: 20px;
+        color: #1F2126;
+    }
+
+    .textContainer p {
+        margin: 5px 0;
+        color: #1F2126;
+    }
+
+    /* Tablet styles */
+    @media (max-width: 1024px) {
+        .container {
+            padding: 80px 60px 80px 60px;
+            gap: 25px;
+        }
+
+        .stories-grid {
+            gap: 40px;
+        }
+
+        .side-stories {
+            gap: 40px;
+        }
+
+        .side-story .imgContainer {
+            width: 220px;
+            min-width: 220px;
+            height: 167px;
+        }
+
+        .textContainer h1 {
+            font-size: 1.8rem;
+        }
+
+        .tagline p {
+            font-size: 18px;
+        }
+    }
+
+    /* Mobile styles */
     @media (max-width: 768px) {
         .container {
-            flex-direction: column;
             padding: 50px 20px 30px 20px;
             gap: 20px;
         }
 
-        .imgContainer {
+        .stories-grid {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .side-stories {
+            gap: 30px;
+        }
+
+        .side-story {
+            flex-direction: column;
+        }
+
+        .side-story .imgContainer {
+            width: 100%;
+            min-width: 100%;
+            height: 250px;
+        }
+
+        .main-story .imgContainer {
             height: 300px;
         }
 
@@ -80,6 +243,10 @@ const storyNumber = 1; // First story is #1
         .textContainer p {
             font-size: 0.9rem;
         }
+
+        .tagline p {
+            font-size: 16px;
+        }
     }
 
     @media (max-width: 480px) {
@@ -88,8 +255,17 @@ const storyNumber = 1; // First story is #1
             gap: 15px;
         }
 
-        .imgContainer {
-            height: 250px;
+        .stories-grid {
+            gap: 20px;
+        }
+
+        .side-stories {
+            gap: 20px;
+        }
+
+        .main-story .imgContainer,
+        .side-story .imgContainer {
+            height: 220px;
         }
 
         .textContainer h1 {
@@ -103,16 +279,16 @@ const storyNumber = 1; // First story is #1
 </style>
 
 <script>
-    const featuredStoryLink = document.querySelector('.featured-story-link');
-    if (featuredStoryLink) {
-        featuredStoryLink.addEventListener('click', () => {
+    const featuredStoryLinks = document.querySelectorAll('.featured-story-link');
+    featuredStoryLinks.forEach((link) => {
+        link.addEventListener('click', () => {
             if (typeof window.posthog !== 'undefined') {
                 window.posthog.capture('story_click', {
-                    story_title: featuredStoryLink.querySelector('h1')?.textContent || 'Unknown',
+                    story_title: link.querySelector('h1')?.textContent || 'Unknown',
                     story_type: 'featured',
-                    story_url: featuredStoryLink.getAttribute('href')
+                    story_url: link.getAttribute('href')
                 });
             }
         });
-    }
+    });
 </script>

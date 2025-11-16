@@ -1,0 +1,27 @@
+---
+// Redirect /tools/[slug] to /tools/[slug]/ (with trailing slash)
+// This ensures relative paths in the HTML work correctly
+const { slug } = Astro.params;
+
+// Check if URL has trailing slash, if not redirect to add it
+if (!Astro.url.pathname.endsWith('/')) {
+  return Astro.redirect(`/tools/${slug}/`);
+}
+
+// Read the HTML file from the public directory
+const filePath = `./public/tools/${slug}/index.html`;
+
+try {
+  const fs = await import('node:fs/promises');
+  const html = await fs.readFile(filePath, 'utf-8');
+
+  return new Response(html, {
+    status: 200,
+    headers: {
+      'Content-Type': 'text/html',
+    },
+  });
+} catch (error) {
+  return new Response('Tool not found', { status: 404 });
+}
+---

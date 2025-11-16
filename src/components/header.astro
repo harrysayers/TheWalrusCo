@@ -4,25 +4,31 @@ import { Image } from 'astro:assets';
 ---
 
 <div class="container">
-    <p>A data journalism publication exploring all facets of culture and society &#x1F3F4;&#x200D;&#x2620;&#xFE0F; &#x1F4F0;</p>
+    <!-- <p>A data journalism publication exploring all facets of culture and society &#x1F3F4;&#x200D;&#x2620;&#xFE0F; &#x1F4F0;</p> -->
     <a href="/" class="logo-link">
         <Image src={Logo} alt="" />
     </a>
-    <!-- <button>
-        <span>Subscribe</span>
-    </button> -->
+    <nav class="nav-buttons">
+        <a class="nav-button orange-button" href="#footer">
+          Join email list
+        </a>
+    </nav>
 </div>
 
 <style>
     .container {
+        position: fixed;
         display: flex;
         align-items: center;
         justify-content: space-between;
         width: 100%;
         margin: 0 auto;
-        padding: 50px 100px 0px 100px;
+        padding: 24px 100px 24px 100px;
         box-sizing: border-box;
-        background-color: #181A1E; /* Dark background like in image */
+        background-color: #F8F6E7; /* Dark background like in image */
+        border-bottom: solid 1px #181A1E;
+        z-index: 10;
+        top: 0;
     }
 
     /* Left item (description) */
@@ -40,41 +46,39 @@ import { Image } from 'astro:assets';
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        text-decoration: none;
     }
 
     .logo-link img {
-        height: 60px; /* Adjust logo size as needed */
+        height: 50px; /* Adjust logo size as needed */
         width: auto;
         display: block;
     }
 
-    /* Right item (button) */
-    .container button {
-        flex: 1;
+    /* Right item (nav buttons) */
+    .nav-buttons {
+        display: flex;
+        gap: 15px;
         margin-left: auto;
-        padding: 5px;
+    }
+
+    .nav-button {
+        padding: 10px;
         background-color: #EEF0E0;
         border: none;
-        color: #181A1E;
+        color: #EEF0E0;
         font-size: 14px;
         cursor: pointer;
-        max-width: 126px;
-        font-family: 'Barrio', system-ui;
+        font-family: 'Roboto', system-ui;
+        font-weight: 500;
+        text-decoration: none;
     }
 
-    .container button span{
-        display: block;
-        width: 100%;
-        height: 100%;
-        border: 1px #181A1E solid;
-        padding: 5px 15px;
-        box-sizing: border-box;
+    .orange-button{
+        background-color: #D45A1D;
     }
 
-    .container button:hover {
-        background-color: #ccc;
-        color: #2a2a2a;
+    .nav-button:hover {
+        color: #1F2126;
     }
 
     @media (max-width: 1080px) {
@@ -101,10 +105,15 @@ import { Image } from 'astro:assets';
             height: 40px;
         }
 
-        .container button {
+        .nav-buttons {
             order: 3;
-            max-width: 100%;
+            width: 100%;
             margin: 0;
+            gap: 10px;
+        }
+
+        .nav-button {
+            flex: 1;
         }
     }
 

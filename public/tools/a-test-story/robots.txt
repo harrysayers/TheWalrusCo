@@ -1,0 +1,4 @@
+# https://www.robotstxt.org/robotstxt.html
+# This is a standalone interactive tool - use the landing page for SEO
+User-agent: *
+Disallow: /

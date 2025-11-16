@@ -1,0 +1,133 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PostHogLayout from '../layouts/PostHogLayout.astro';
+import Header from '../components/header.astro';
+import Footer from '../components/footer.astro';
+---
+
+<Layout>
+	<Header/>
+	<main>
+		<section class="hero">
+			<div class="container">
+				<h1>Contact Us</h1>
+				<p class="hero-text">Get in touch with The Walrus Co team</p>
+			</div>
+		</section>
+
+		<section class="content">
+			<div class="container">
+				<div class="prose">
+					<p>We'd love to hear from you. Whether you have a story tip, feedback, partnership inquiry, or just want to say hello, we're here to listen.</p>
+
+					<h2>Get In Touch</h2>
+					<p>For all inquiries including editorial, partnerships, and press:<br>
+					<a href="mailto:hello@thewalrusco.com">hello@thewalrusco.com</a></p>
+
+					<p>Interested in partnerships? Please review our <a href="/partner-policy">Partner Policy</a> before reaching out.</p>
+
+					<h2>Social Media</h2>
+					<p>Follow us and join the conversation:</p>
+					<p>
+						<a href="https://www.instagram.com/thewalrus_co/" target="_blank">Instagram</a> •
+						<a href="https://bsky.app/profile/thewalrusco.bsky.social" target="_blank">Bluesky</a> •
+						<a href="https://www.facebook.com/thewalrusco" target="_blank">Facebook</a> •
+						<a href="https://www.threads.net/@thewalrus_co" target="_blank">Threads</a> •
+						<a href="https://twitter.com/thewalrus_co" target="_blank">X (Twitter)</a>
+					</p>
+
+					<h2>About The Walrus Co</h2>
+					<p>The Walrus Co is a data-driven journalism platform committed to telling the truth through rigorous analysis and compelling storytelling.</p>
+
+					<p><strong>Published by:</strong><br>
+					Axamattic Limited<br>
+					Company No. 12731987<br>
+					Registered in England and Wales</p>
+				</div>
+			</div>
+		</section>
+	</main>
+	<Footer/>
+</Layout>
+
+<style>
+	main {
+		color: #1F2126;
+	}
+
+	.container {
+		max-width: 720px;
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	.hero {
+		padding: 120px 0 60px;
+		text-align: center;
+	}
+
+	.hero h1 {
+		font-family: 'Barrio', cursive;
+		font-size: 2.5rem;
+		margin-bottom: 16px;
+		color: #1F2126;
+		font-weight: normal;
+	}
+
+	.hero-text {
+		font-size: 1.125rem;
+		color: #1F2126;
+		margin: 0;
+		line-height: 1.5;
+	}
+
+	.content {
+		padding: 60px 0 120px;
+	}
+
+	.prose {
+		font-size: 1rem;
+		line-height: 1.7;
+		color: #1F2126;
+	}
+
+	.prose p {
+		margin-bottom: 20px;
+	}
+
+	.prose h2 {
+		font-family: 'Barrio', cursive;
+		font-size: 1.5rem;
+		color: #1F2126;
+		margin: 40px 0 20px 0;
+		font-weight: normal;
+	}
+
+	.prose strong {
+		color: #1F2126;
+		font-weight: 600;
+	}
+
+	.prose a {
+		color: #3498DB;
+		text-decoration: none;
+	}
+
+	.prose a:hover {
+		text-decoration: underline;
+	}
+
+	@media (max-width: 768px) {
+		.hero h1 {
+			font-size: 2rem;
+		}
+
+		.hero-text {
+			font-size: 1rem;
+		}
+
+		.container {
+			padding: 0 20px;
+		}
+	}
+</style>

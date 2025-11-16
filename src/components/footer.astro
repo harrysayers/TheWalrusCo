@@ -1,51 +1,139 @@
 ---
 import Logo from '../assets/footer-logo.svg';
+import FullLogo from '../assets/logo.svg';
 import { Image } from 'astro:assets';
+import Axamattic from '../assets/axamattic.svg'
+import AiOutlineInstagram from '../assets/react-icons/AiOutlineInstagram.svg'
+import AiOutlineFacebook from '../assets/react-icons/AiOutlineFacebook.svg'
+import FaThreads from '../assets/react-icons/FaThreads.svg'
+import FaXTwitter from '../assets/react-icons/FaXTwitter.svg'
+import RiBlueskyLine from '../assets/react-icons/RiBlueskyLine.svg'
+
+
 ---
 
-<footer class="footer">
+<footer class="footer" id="footer">
     <div class="footer-content">
-        <div class="footer-columns">
+        <div class="footer-top-row">
+            <div class="footer-emailList">
+                <Image src={FullLogo} alt={''}/>
+                <p>Join our email list and get our latest publications to your inbox.</p>
+                <form id="email-signup-form">
+                    <input type="email" name="email" placeholder="Email address" required/>
+                    <button type="submit">
+                        Sign up to list
+                    </button>
+                    <p class="form-message"></p>
+                </form>
+            </div>
+            <div class="footer-columns">
             <div class="footer-column">
-                <h4>Other stuff</h4>
+                <h4>The Walrus Co</h4>
                 <ul>
                     <li><a href="https://www.axamattic.com/" target="_blank">Axamattic</a></li>
-                    <li><a href="/about">About us</a></li>
-                    <li><a href="/privacy">Privacy policy</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/partner-policy">Partner Policy</a></li>
+                    <li><a href="/terms">Terms & Conditions</a></li>
+                    <li><a href="/contact">Contact Us</a></li>
                 </ul>
             </div>
             
             <div class="footer-column">
                 <h4>Follow Us</h4>
                 <ul>
-                    <li><a href="https://www.instagram.com/thewalrus_co/" target="_blank">Instagram</a></li>
-                    <li><a href="https://bsky.app/profile/thewalrusco.bsky.social" target="_blank">Bluesky</a></li>
-                    <li><a href="https://www.youtube.com/@TheWalrusCo" target="_blank">Youtube</a></li>
+                    <li>  
+                        <a href="https://www.instagram.com/thewalrus_co/" target="_blank">
+                            <Image src={AiOutlineInstagram} alt={''}/>
+                            Instagram
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://bsky.app/profile/thewalrusco.bsky.social" target="_blank">
+                            <Image src={RiBlueskyLine} alt={''}/>
+                            Bluesky
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://x.com/thewalrusco" target="_blank">
+                            <Image src={FaXTwitter} alt={''}/>
+                            X
+                        </a>
+                    </li>
+
                 </ul>
             </div>
         </div>
-        
+        </div>    
         <div class="footer-logo">
             <Image src={Logo} alt="The Walrus Co" />
         </div>
         
         <div class="footer-legal">
-            <p>The Walrus Co is a part of Axamattic. Axamattic Limited is a company registered in England and Wales (Company No. 12731987).</p>
+            <div class="footer-axamattic">
+                <a href="https://www.axamattic.com" target="_blank">a <Image src={Axamattic} alt={''}/> product</a>
+            </div>
+            <!-- <p>© 2025 Axamattic.</p> -->
         </div>
     </div>
 </footer>
 
 <style>
     .footer {
-        background-color: #181A1E;
-        color: #EEF0E0;
-        padding: 60px 100px 30px 100px;
+        background-color: #F1EDD2;
+        color: #1F2126;
+        padding: 100px 100px 30px 100px;
         box-sizing: border-box;
     }
     
     .footer-content {
         max-width: 1200px;
         margin: 0 auto;
+    }
+
+    .footer-content .footer-top-row{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 100px;
+    }
+
+    .footer-emailList {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .footer-emailList p{
+        max-width: 260px;
+        font-size: 16px;
+    }
+
+    .footer-emailList form{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .footer-emailList form input{
+        height: 50px;
+        border: none;
+        margin-bottom: 20px;
+        padding: 0px 15px;
+        width: 350px;
+
+    }
+
+    .footer-emailList form button{
+        height: 50px;
+        border: none;
+        background-color: #D45A1D;
+        width: 200px;
+        color: #fff;
+        font-size: 16px;
+    }
+
+    .footer-emailList form button:hover{
+        background-color: #1F2126;
     }
     
     .footer-columns {
@@ -61,9 +149,9 @@ import { Image } from 'astro:assets';
     }
     
     .footer-column h4 {
-        font-size: 1.2rem;
+        font-size: 22px;
         margin-bottom: 20px;
-        color: #EEF0E0;
+        color: #1F2126;
         font-family: 'Barrio', system-ui;
     }
     
@@ -76,11 +164,19 @@ import { Image } from 'astro:assets';
     .footer-column li {
         margin-bottom: 12px;
     }
+
+    .footer-column li img{
+        width: 24px;
+    }
     
     .footer-column a {
-        color: #EEF0E0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+        color: #1F2126;
         text-decoration: none;
-        font-size: 0.95rem;
+        font-size: 18px;
         transition: opacity 0.2s ease;
     }
     
@@ -90,7 +186,7 @@ import { Image } from 'astro:assets';
     
     .footer-logo {
         text-align: center;
-        margin-bottom: 40px;
+        margin-bottom: 100px;
     }
     
     .footer-logo img {
@@ -99,9 +195,23 @@ import { Image } from 'astro:assets';
     }
     
     .footer-legal {
+        display: flex;
+        flex-direction: row;
         text-align: center;
         padding-top: 20px;
-        border-top: 1px solid #333;
+        align-items: center;
+        justify-content: center;
+        gap: 50px;
+    }
+
+    .footer-axamattic a{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        text-decoration: none;
+        color: #1F2126;
     }
     
     .footer-legal p {
@@ -111,23 +221,160 @@ import { Image } from 'astro:assets';
         line-height: 1.4;
     }
     
+    /* Tablet styles */
+    @media (max-width: 1024px) {
+        .footer {
+            padding: 60px 40px 30px 40px;
+        }
+
+        .footer-content .footer-top-row {
+            gap: 50px;
+            margin-bottom: 80px;
+        }
+
+        .footer-columns {
+            gap: 50px;
+        }
+
+        .footer-logo {
+            margin-bottom: 80px;
+        }
+
+        .footer-logo img {
+            height: 70px;
+        }
+    }
+
+    /* Mobile styles */
     @media (max-width: 768px) {
         .footer {
             padding: 40px 20px 20px 20px;
         }
-        
-        .footer-columns {
+
+        .footer-content .footer-top-row {
             flex-direction: column;
             gap: 40px;
-            margin-bottom: 40px;
+            margin-bottom: 60px;
         }
-        
+
+        .footer-emailList {
+            width: 100%;
+        }
+
+        .footer-emailList img {
+            max-width: 200px;
+        }
+
+        .footer-emailList p {
+            max-width: 100%;
+        }
+
+        .footer-emailList form input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .footer-emailList form button {
+            width: 100%;
+        }
+
+        .footer-columns {
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 0;
+            width: 100%;
+        }
+
+        .footer-column {
+            width: 100%;
+        }
+
+        .footer-column h4 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .footer-column a {
+            font-size: 16px;
+        }
+
+        .footer-logo {
+            margin-bottom: 60px;
+            margin-top: 40px;
+        }
+
         .footer-logo img {
-            height: 50px;
+            height: 60px;
         }
-        
+
+        .footer-legal {
+            flex-direction: column;
+            gap: 20px;
+        }
+
         .footer-legal p {
             font-size: 0.8rem;
         }
     }
+
+    .form-message {
+        margin-top: 10px;
+        font-size: 14px;
+        min-height: 20px;
+    }
+
+    .form-message.success {
+        color: #28a745;
+    }
+
+    .form-message.error {
+        color: #dc3545;
+    }
 </style>
+
+<script>
+    const form = document.getElementById('email-signup-form') as HTMLFormElement;
+    const message = form?.querySelector('.form-message') as HTMLParagraphElement;
+    const submitButton = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
+
+    form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const email = formData.get('email');
+
+        if (!email) return;
+
+        submitButton.disabled = true;
+        submitButton.textContent = 'Signing up...';
+        message.textContent = '';
+        message.className = 'form-message';
+
+        try {
+            const response = await fetch('/api/subscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                message.textContent = 'Successfully subscribed!';
+                message.classList.add('success');
+                form.reset();
+            } else {
+                message.textContent = data.error || 'Something went wrong';
+                message.classList.add('error');
+            }
+        } catch (error) {
+            message.textContent = 'Failed to subscribe. Please try again.';
+            message.classList.add('error');
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Sign up to list';
+        }
+    });
+</script>

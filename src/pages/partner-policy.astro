@@ -1,0 +1,155 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PostHogLayout from '../layouts/PostHogLayout.astro';
+import Header from '../components/header.astro';
+import Footer from '../components/footer.astro';
+---
+
+<Layout>
+	<Header/>
+	<main>
+		<section class="hero">
+			<div class="container">
+				<h1>Partner Policy</h1>
+				<p class="hero-text">Last updated: January 2025</p>
+			</div>
+		</section>
+
+		<section class="content">
+			<div class="container">
+				<div class="prose">
+					<p>The Walrus Co is committed to producing independent, data-driven journalism that tells the truth. This partner policy explains how we work with partners while maintaining our editorial independence and integrity.</p>
+
+					<h2>Our Funding Model</h2>
+					<p>Our journalism is supported by readers and partners who believe in the value of rigorous, data-driven storytelling. We are selective about the partnerships we establish, choosing to work only with organisations that share our commitment to truth and transparency.</p>
+
+					<h2>Editorial Independence</h2>
+					<p><strong>Our independence is non-negotiable.</strong> If we ever have to choose between a partner and the story, we will always choose the story.</p>
+
+					<p>Partners have no influence over our editorial decisions, the stories we choose to investigate, or how we present our findings. Our commitment is to the truth and to our readers, not to any commercial interest.</p>
+
+					<h2>Partnership Philosophy</h2>
+					<p>We establish partnerships with organisations that:</p>
+					<p>• Support independent, data-driven journalism</p>
+					<p>• Enable public debate and the examination of important issues</p>
+					<p>• Share their expertise to help inform public understanding</p>
+					<p>• Respect our editorial independence and journalistic integrity</p>
+
+					<p>We believe in opening up journalism to examine issues and develop ideas that matter. Our partnerships help us bring more voices to the conversation while maintaining our analytical rigor.</p>
+
+					<h2>How We Work With Partners</h2>
+					<p>When we work with partners, we maintain clear boundaries:</p>
+
+					<p><strong>Transparency:</strong> We clearly disclose any partnerships or support that relates to our content. Our readers deserve to know how our journalism is funded.</p>
+
+					<p><strong>Confidentiality:</strong> We respect the confidentiality of private conversations with partners, but what we learn through our partnerships may inform our journalism.</p>
+
+					<p><strong>Integrity:</strong> Partners understand that The Walrus Co is a journalistic enterprise first and foremost. We will not compromise our editorial standards for commercial relationships.</p>
+
+					<h2>Advertising and Sponsorship</h2>
+					<p>We avoid invasive advertising and loud brand positioning that detracts from the reading experience. Instead, we prefer thoughtful partnerships that align with our values and support quality journalism.</p>
+
+					<p>Any sponsored content is clearly labeled, and all editorial content remains under the full control of The Walrus Co editorial team.</p>
+
+					<h2>Partner Opportunities</h2>
+					<p>If your organisation is interested in partnering with The Walrus Co, we welcome conversations with those who:</p>
+					<p>• Value independent, data-driven journalism</p>
+					<p>• Want to support meaningful public debate</p>
+					<p>• Respect editorial independence</p>
+					<p>• Share our commitment to truth and transparency</p>
+
+					<h2>Contact Us</h2>
+					<p>For partnership inquiries, please contact us at <a href="mailto:hello@thewalrusco.com">hello@thewalrusco.com</a>.</p>
+
+					<p><strong>Published by:</strong><br>
+					Axamattic Limited<br>
+					Company No. 12731987<br>
+					Registered in England and Wales</p>
+				</div>
+			</div>
+		</section>
+	</main>
+	<Footer/>
+</Layout>
+
+<style>
+	main {
+		color: #1F2126;
+	}
+
+	.container {
+		max-width: 720px;
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	.hero {
+		padding: 120px 0 60px;
+		text-align: center;
+	}
+
+	.hero h1 {
+		font-family: 'Barrio', cursive;
+		font-size: 2.5rem;
+		margin-bottom: 16px;
+		color: #1F2126;
+		font-weight: normal;
+	}
+
+	.hero-text {
+		font-size: 1.125rem;
+		color: #1F2126;
+		margin: 0;
+		line-height: 1.5;
+	}
+
+	.content {
+		padding: 60px 0 120px;
+	}
+
+	.prose {
+		font-size: 1rem;
+		line-height: 1.7;
+		color: #1F2126;
+	}
+
+	.prose p {
+		margin-bottom: 20px;
+	}
+
+	.prose h2 {
+		font-family: 'Barrio', cursive;
+		font-size: 1.5rem;
+		color: #1F2126;
+		margin: 40px 0 20px 0;
+		font-weight: normal;
+	}
+
+	.prose strong {
+		color: #1F2126;
+		font-weight: 600;
+	}
+
+	.prose a {
+		color: #3498DB;
+		text-decoration: none;
+	}
+
+	.prose a:hover {
+		text-decoration: underline;
+	}
+
+	@media (max-width: 768px) {
+		.hero h1 {
+			font-size: 2rem;
+		}
+
+		.hero-text {
+			font-size: 1rem;
+		}
+
+		.container {
+			padding: 0 20px;
+		}
+	}
+</style>

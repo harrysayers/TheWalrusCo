@@ -1,0 +1,495 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/header.astro';
+import Footer from '../../components/footer.astro';
+import { SEO } from 'astro-seo';
+
+// Get the story entry
+const { slug } = Astro.params;
+const entry = await getEntry('stories', slug);
+
+if (!entry) {
+  return Astro.redirect('/404');
+}
+
+const { Content } = await entry.render();
+
+// Generate static paths for all stories
+export async function getStaticPaths() {
+  const stories = await getCollection('stories');
+  return stories.map(story => ({
+    params: { slug: story.slug },
+  }));
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <SEO
+      title={`${entry.data.title} | The Walrus Co`}
+      description={entry.data.description}
+      openGraph={{
+        basic: {
+          title: entry.data.title,
+          type: "article",
+          image: entry.data.image,
+        },
+        optional: {
+          description: entry.data.description,
+        },
+        article: {
+          publishedTime: entry.data.date,
+          authors: ['The Walrus Co'],
+        }
+      }}
+      extend={{
+        link: [{ rel: "icon", href: "/favicon.svg" }],
+        meta: [
+          {
+            name: "twitter:image",
+            content: entry.data.image,
+          },
+          {
+            name: "twitter:card",
+            content: "summary_large_image",
+          },
+        ],
+      }}
+    />
+  </head>
+  <body>
+    <Header />
+    <main class="story-page">
+      {entry.data.isStandalone && entry.data.hasLandingPage ? (
+        <!-- Landing page for standalone tools -->
+        <div class="tool-landing">
+          <article class="content">
+            <div class="story-header">
+              <div class="meta">
+                <span class="type">{entry.data.type}</span>
+                <span class="date">{entry.data.date}</span>
+              </div>
+              <h1>{entry.data.title}</h1>
+              <p class="description">{entry.data.description}</p>
+            </div>
+            
+
+            <div class="hero">
+              <img src={entry.data.image} alt={entry.data.title} />
+            </div>
+            <div class="intro">
+              <Content />
+            </div>
+             <a href={entry.data.standaloneUrl} class="launch-button">
+              Launch Interactive Tool →
+            </a>
+          </article>
+        </div>
+      ) : entry.data.isStandalone && !entry.data.hasLandingPage ? (
+        <!-- Auto-redirect for standalone tools without landing page -->
+        <meta http-equiv="refresh" content={`0; url=${entry.data.standaloneUrl}`} />
+      ) : (
+        <!-- Regular text-based story -->
+        <article class="text-story">
+          <div class="story-header">
+            <div class="meta">
+              <span class="type">{entry.data.type}</span>
+              <span class="date">{entry.data.date}</span>
+            </div>
+            <h1>{entry.data.title}</h1>
+            <p class="description">{entry.data.description}</p>
+          </div>
+
+          <div class="story-image">
+            <img src={entry.data.image} alt={entry.data.title} />
+          </div>
+
+          <div class="story-content">
+            <Content />
+          </div>
+        </article>
+      )}
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  html {
+		scroll-behavior: smooth;
+	}
+  body {
+    margin: 0;
+    font-family: 'Roboto Variable', sans-serif;
+    background-color: #F8F6E7;
+  }
+
+  .story-page {
+    min-height: 100vh;
+  }
+
+  /* Tool Landing Page Styles */
+  .tool-landing {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 150px 20px 100px 20px;
+  }
+
+  .hero {
+    margin-bottom: 40px;
+  }
+
+  .hero img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .content {
+    color: #1F2126;
+  }
+
+  .meta {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #666;
+  }
+
+  .type {
+    color: #D45A1D;
+    font-weight: 500;
+  }
+
+  .tool-landing h1 {
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: #1F2126;
+    margin-bottom: 30px;
+    line-height: 1.2;
+  }
+
+  .intro {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #333;
+    margin-bottom: 30px;
+  }
+
+  .intro :global(h2) {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: #1F2126;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+
+  .intro :global(h3) {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #1F2126;
+    margin-top: 30px;
+    margin-bottom: 15px;
+  }
+
+  .intro :global(ul), .intro :global(ol) {
+    margin: 20px 0;
+    padding-left: 30px;
+  }
+
+  .intro :global(li) {
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+
+  .tech-stack {
+    margin: 30px 0;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+  }
+
+  .tech-label {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+  }
+
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .tech-tag {
+    padding: 6px 14px;
+    background: #F8F6E7;
+    color: #D45A1D;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .launch-button {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 16px 40px;
+    background: #D45A1D;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: background 0.2s;
+  }
+
+  .launch-button:hover {
+    background: #B84915;
+  }
+
+  /* Text Story Styles */
+  .text-story {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 150px 20px 100px 20px;
+  }
+
+  .story-header {
+    margin-bottom: 40px;
+  }
+
+  .text-story h1 {
+    font-size: 3rem;
+    font-weight: 500;
+    color: #1F2126;
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .description {
+    font-size: 1.3rem;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  .story-image {
+    margin: 40px 0;
+  }
+
+  .story-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .story-content {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #333;
+  }
+
+  .story-content :global(h1) {
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: #1F2126;
+    margin-top: 60px;
+    margin-bottom: 20px;
+  }
+
+  .story-content :global(h2) {
+    font-size: 2rem;
+    font-weight: 500;
+    color: #1F2126;
+    margin-top: 50px;
+    margin-bottom: 20px;
+  }
+
+  .story-content :global(h3) {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #1F2126;
+    margin-top: 40px;
+    margin-bottom: 15px;
+  }
+
+  .story-content :global(p) {
+    margin-bottom: 20px;
+  }
+
+  .story-content :global(ul), .story-content :global(ol) {
+    margin: 20px 0;
+    padding-left: 30px;
+  }
+
+  .story-content :global(li) {
+    margin-bottom: 10px;
+  }
+
+  .story-content :global(strong) {
+    color: #1F2126;
+    font-weight: 600;
+  }
+
+  .story-content :global(a) {
+    color: #D45A1D;
+    text-decoration: none;
+  }
+
+  .story-content :global(a:hover) {
+    text-decoration: underline;
+  }
+
+  /* Tablet styles */
+  @media (max-width: 1024px) {
+    .tool-landing, .text-story {
+      padding: 120px 40px 80px 40px;
+    }
+
+    .tool-landing h1 {
+      font-size: 2rem;
+    }
+
+    .text-story h1 {
+      font-size: 2.5rem;
+    }
+
+    .hero img {
+      border-radius: 6px;
+    }
+
+    .story-content :global(h1) {
+      font-size: 2rem;
+    }
+
+    .story-content :global(h2) {
+      font-size: 1.7rem;
+    }
+
+    .story-content :global(h3) {
+      font-size: 1.3rem;
+    }
+  }
+
+  /* Mobile styles */
+  @media (max-width: 768px) {
+    .tool-landing, .text-story {
+      padding: 120px 20px 60px 20px;
+    }
+
+    .tool-landing h1 {
+      font-size: 1.75rem;
+      margin-bottom: 20px;
+    }
+
+    .text-story h1 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    .intro, .story-content {
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .description {
+      font-size: 1.05rem;
+    }
+
+    .hero {
+      margin-bottom: 30px;
+    }
+
+    .hero img {
+      border-radius: 4px;
+    }
+
+    .story-image {
+      margin: 30px 0;
+    }
+
+    .meta {
+      gap: 15px;
+      font-size: 13px;
+    }
+
+    .launch-button {
+      display: block;
+      text-align: center;
+      padding: 14px 30px;
+      font-size: 1rem;
+    }
+
+    .tech-stack {
+      padding: 15px;
+    }
+
+    .story-content :global(h1) {
+      font-size: 1.8rem;
+      margin-top: 40px;
+    }
+
+    .story-content :global(h2) {
+      font-size: 1.5rem;
+      margin-top: 35px;
+    }
+
+    .story-content :global(h3) {
+      font-size: 1.2rem;
+      margin-top: 25px;
+    }
+
+    .story-content :global(ul), .story-content :global(ol) {
+      padding-left: 25px;
+    }
+  }
+
+  /* Small mobile */
+  @media (max-width: 480px) {
+    .tool-landing, .text-story {
+      padding: 110px 15px 50px 15px;
+    }
+
+    .tool-landing h1 {
+      font-size: 1.5rem;
+    }
+
+    .text-story h1 {
+      font-size: 1.75rem;
+    }
+
+    .description {
+      font-size: 1rem;
+    }
+
+    .intro, .story-content {
+      font-size: 0.95rem;
+    }
+
+    .launch-button {
+      padding: 12px 24px;
+      font-size: 0.95rem;
+    }
+
+    .story-content :global(h1) {
+      font-size: 1.5rem;
+    }
+
+    .story-content :global(h2) {
+      font-size: 1.3rem;
+    }
+
+    .story-content :global(h3) {
+      font-size: 1.1rem;
+    }
+  }
+</style>
