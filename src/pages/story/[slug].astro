@@ -5,7 +5,7 @@ const { slug } = Astro.params;
 
 // Check if URL has trailing slash, if not redirect to add it
 if (!Astro.url.pathname.endsWith('/')) {
-  return Astro.redirect(`/tools/${slug}/`, 301);
+  return Astro.redirect(`/story/${slug}/`, 301);
 }
 
 // Read the HTML file - handle both dev and production
@@ -16,15 +16,15 @@ try {
     // In dev, read from filesystem
     const fs = await import('node:fs/promises');
     const path = await import('node:path');
-    const filePath = path.join(process.cwd(), 'public', 'tools', slug, 'index.html');
+    const filePath = path.join(process.cwd(), 'public', 'story', slug, 'index.html');
     html = await fs.readFile(filePath, 'utf-8');
   } else {
     // In production (Vercel), fetch the static file
-    const toolUrl = new URL(`/tools/${slug}/index.html`, Astro.site || Astro.url.origin);
+    const toolUrl = new URL(`/story/${slug}/index.html`, Astro.site || Astro.url.origin);
     const response = await fetch(toolUrl);
 
     if (!response.ok) {
-      return new Response('Tool not found', { status: 404 });
+      return new Response('Story not found', { status: 404 });
     }
 
     html = await response.text();
@@ -37,6 +37,6 @@ try {
     },
   });
 } catch (error) {
-  return new Response('Tool not found', { status: 404 });
+  return new Response('Story not found', { status: 404 });
 }
 ---
