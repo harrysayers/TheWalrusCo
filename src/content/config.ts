@@ -5,6 +5,7 @@ const stories = defineCollection({
   schema: z.object({
     title: z.string(),
     type: z.enum(['Data Story', 'Data Tool']),
+    tag: z.enum(['Science', 'Society', 'Culture']),
     date: z.string(),
     description: z.string(),
     image: z.string(),

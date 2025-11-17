@@ -71,7 +71,10 @@ export async function getStaticPaths() {
           <article class="content">
             <div class="story-header">
               <div class="meta">
-                <span class="type">{entry.data.type}</span>
+                <div>
+                  <span class="type">{entry.data.type}</span>
+                  <span class="tag">{entry.data.tag}</span>
+                </div>
                 <span class="date">{entry.data.date}</span>
               </div>
               <h1>{entry.data.title}</h1>
@@ -82,12 +85,13 @@ export async function getStaticPaths() {
             <div class="hero">
               <img src={entry.data.image} alt={entry.data.title} />
             </div>
+            <a href={entry.data.standaloneUrl} class="launch-button">
+              Launch Interactive Tool →
+            </a>
             <div class="intro">
               <Content />
             </div>
-             <a href={entry.data.standaloneUrl} class="launch-button">
-              Launch Interactive Tool →
-            </a>
+
           </article>
         </div>
       ) : entry.data.isStandalone && !entry.data.hasLandingPage ? (
@@ -98,7 +102,10 @@ export async function getStaticPaths() {
         <article class="text-story">
           <div class="story-header">
             <div class="meta">
-              <span class="type">{entry.data.type}</span>
+              <div>
+                <span class="type">{entry.data.type}</span>
+                <span class="tag">{entry.data.tag}</span>   
+              </div>
               <span class="date">{entry.data.date}</span>
             </div>
             <h1>{entry.data.title}</h1>
@@ -159,14 +166,23 @@ export async function getStaticPaths() {
 
   .meta {
     display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
+    justify-content: space-between;
+    margin-bottom: 50px;
     font-size: 14px;
     color: #666;
   }
 
-  .type {
+   .meta div{
+    display: flex;
+    gap: 20px;
+   }
+
+  .tag {
     color: #D45A1D;
+    font-weight: 500;
+  }
+
+  .type {
     font-weight: 500;
   }
 

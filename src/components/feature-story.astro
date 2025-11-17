@@ -4,11 +4,17 @@ import { getCollection } from 'astro:content';
 // Get all stories from Content Collections
 const allStories = await getCollection('stories');
 
-// Sort by featured status
+// Helper function to parse date strings like "17th Nov 2025"
+const parseDate = (dateStr: string) => {
+    const cleaned = dateStr.replace(/(\d+)(st|nd|rd|th)/, '$1');
+    return new Date(cleaned);
+};
+
+// Sort by date (newest first)
 const sortedStories = allStories.sort((a, b) => {
-    if (a.data.featured && !b.data.featured) return -1;
-    if (!a.data.featured && b.data.featured) return 1;
-    return 0;
+    const dateA = parseDate(a.data.date);
+    const dateB = parseDate(b.data.date);
+    return dateB.getTime() - dateA.getTime();
 });
 
 // Get the first three stories (or however many we have)
@@ -32,6 +38,7 @@ if (!featuredStory) return;
             <div class="textContainer">
                 <div class="infoContainer">
                     <p>{featuredStory.data.type}</p>
+                    <p class="infoTag">{featuredStory.data.tag}</p>
                 </div>
                 <div>
                     <h1>{featuredStory.data.title}</h1>
@@ -47,6 +54,7 @@ if (!featuredStory) return;
                 <div class="textContainer">
                     <div class="infoContainer">
                         <p>{secondStory.data.type}</p>
+                        <p class="infoTag">{secondStory.data.tag}</p>
                     </div>
                     <div>
                         <h1>{secondStory.data.title}</h1>
@@ -60,6 +68,7 @@ if (!featuredStory) return;
                 <div class="textContainer">
                     <div class="infoContainer">
                         <p>{thirdStory.data.type}</p>
+                        <p class="infoTag">{thirdStory.data.tag}</p>
                     </div>
                     <div>
                         <h1>{thirdStory.data.title}</h1>
@@ -156,7 +165,13 @@ if (!featuredStory) return;
     .textContainer .infoContainer{
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: start;
+        gap: 10px;
+        font-size: 14px;
+    }
+
+    .textContainer .infoContainer .infoTag{
+        color: #D45A1D;
     }
 
     .textContainer h1 {
