@@ -1,27 +1,18 @@
 ---
-import { getCollection, getEntry } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
+import { getStoryBySlug } from '../../utils/notion';
 import Header from '../../components/header.astro';
 import Footer from '../../components/footer.astro';
 import { SEO } from 'astro-seo';
 
-// Get the story entry
+// Get the story entry from Notion
 const { slug } = Astro.params;
-const entry = await getEntry('stories', slug);
+const story = await getStoryBySlug(slug!);
 
-if (!entry) {
+if (!story) {
   return Astro.redirect('/404');
 }
 
-const { Content } = await entry.render();
-
-// Generate static paths for all stories
-export async function getStaticPaths() {
-  const stories = await getCollection('stories');
-  return stories.map(story => ({
-    params: { slug: story.slug },
-  }));
-}
+const entry = story;
 ---
 
 <!doctype html>
@@ -65,8 +56,8 @@ export async function getStaticPaths() {
   <body>
     <Header />
     <main class="story-page">
-      {entry.data.isStandalone && entry.data.hasLandingPage ? (
-        <!-- Landing page for standalone tools -->
+      {entry.data.hasLandingPage ? (
+        <!-- Landing page with Notion content -->
         <div class="tool-landing">
           <article class="content">
             <div class="story-header">
@@ -80,46 +71,23 @@ export async function getStaticPaths() {
               <h1>{entry.data.title}</h1>
               <p class="description">{entry.data.description}</p>
             </div>
-            
 
             <div class="hero">
               <img src={entry.data.image} alt={entry.data.title} />
             </div>
-            <a href={entry.data.standaloneUrl} class="launch-button">
-              Launch Interactive Tool →
-            </a>
-            <div class="intro">
-              <Content />
-            </div>
 
+            <a href={entry.data.standaloneUrl} class="launch-button">
+              Launch {entry.data.type} →
+            </a>
+
+            {entry.data.content && (
+              <div class="landing-content" set:html={entry.data.content.replace(/\n/g, '<br/>')} />
+            )}
           </article>
         </div>
-      ) : entry.data.isStandalone && !entry.data.hasLandingPage ? (
-        <!-- Auto-redirect for standalone tools without landing page -->
-        <meta http-equiv="refresh" content={`0; url=${entry.data.standaloneUrl}`} />
       ) : (
-        <!-- Regular text-based story -->
-        <article class="text-story">
-          <div class="story-header">
-            <div class="meta">
-              <div>
-                <span class="type">{entry.data.type}</span>
-                <span class="tag">{entry.data.tag}</span>   
-              </div>
-              <span class="date">{entry.data.date}</span>
-            </div>
-            <h1>{entry.data.title}</h1>
-            <p class="description">{entry.data.description}</p>
-          </div>
-
-          <div class="story-image">
-            <img src={entry.data.image} alt={entry.data.title} />
-          </div>
-
-          <div class="story-content">
-            <Content />
-          </div>
-        </article>
+        <!-- Auto-redirect directly to tool (no landing page) -->
+        <meta http-equiv="refresh" content={`0; url=${entry.data.standaloneUrl}`} />
       )}
     </main>
 
@@ -194,11 +162,11 @@ export async function getStaticPaths() {
     line-height: 1.2;
   }
 
-  .intro {
+  .landing-content {
     font-size: 1.1rem;
     line-height: 1.8;
     color: #333;
-    margin-bottom: 30px;
+    margin: 30px 0;
   }
 
   .intro :global(h2) {

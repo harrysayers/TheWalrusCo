@@ -1,26 +1,13 @@
 ---
-import { getCollection } from 'astro:content';
+import { getAllStories } from '../utils/notion';
 
-// Get all stories from Content Collections
-const allStories = await getCollection('stories');
-
-// Helper function to parse date strings like "17th Nov 2025"
-const parseDate = (dateStr: string) => {
-    const cleaned = dateStr.replace(/(\d+)(st|nd|rd|th)/, '$1');
-    return new Date(cleaned);
-};
-
-// Sort by date (newest first)
-const sortedStories = allStories.sort((a, b) => {
-    const dateA = parseDate(a.data.date);
-    const dateB = parseDate(b.data.date);
-    return dateB.getTime() - dateA.getTime();
-});
+// Get all stories from Notion (already sorted by date, newest first)
+const allStories = await getAllStories();
 
 // Get the first three stories (or however many we have)
-const featuredStory = sortedStories[0];
-const secondStory = sortedStories[1] || sortedStories[0]; // Fallback to first if not enough
-const thirdStory = sortedStories[2] || sortedStories[0];  // Fallback to first if not enough
+const featuredStory = allStories[0];
+const secondStory = allStories[1] || allStories[0]; // Fallback to first if not enough
+const thirdStory = allStories[2] || allStories[0];  // Fallback to first if not enough
 
 // Only render if we have at least one story
 if (!featuredStory) return;

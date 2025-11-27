@@ -1,6 +1,6 @@
 ---
-// Redirect /tools/[slug] to /tools/[slug]/ (with trailing slash)
-// This ensures relative paths in the HTML work correctly
+import { getStoryBySlug } from '../../utils/notion';
+
 const { slug } = Astro.params;
 
 // Check if URL has trailing slash, if not redirect to add it
@@ -8,35 +8,32 @@ if (!Astro.url.pathname.endsWith('/')) {
   return Astro.redirect(`/story/${slug}/`, 301);
 }
 
-// Read the HTML file - handle both dev and production
+// Get story metadata from Notion to find its standalone URL
+const story = await getStoryBySlug(slug);
+
+if (!story || !story.data.standaloneUrl) {
+  return new Response('Story not found', { status: 404 });
+}
+
+// Fetch the story HTML from Vercel Blob or external URL
 try {
-  let html;
+  const response = await fetch(story.data.standaloneUrl);
 
-  if (import.meta.env.DEV) {
-    // In dev, read from filesystem
-    const fs = await import('node:fs/promises');
-    const path = await import('node:path');
-    const filePath = path.join(process.cwd(), 'public', 'story', slug, 'index.html');
-    html = await fs.readFile(filePath, 'utf-8');
-  } else {
-    // In production (Vercel), fetch the static file
-    const toolUrl = new URL(`/story/${slug}/index.html`, Astro.site || Astro.url.origin);
-    const response = await fetch(toolUrl);
-
-    if (!response.ok) {
-      return new Response('Story not found', { status: 404 });
-    }
-
-    html = await response.text();
+  if (!response.ok) {
+    return new Response('Story not found', { status: 404 });
   }
+
+  const html = await response.text();
 
   return new Response(html, {
     status: 200,
     headers: {
       'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400'
     },
   });
 } catch (error) {
+  console.error(`Error fetching story ${slug}:`, error);
   return new Response('Story not found', { status: 404 });
 }
 ---

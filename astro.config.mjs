@@ -1,17 +1,22 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import vercel from '@astrojs/vercel/serverless';
+import vercel from '@astrojs/vercel';
 
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  output: 'server',
+  output: 'server', // SSR mode with caching
 
-  adapter: vercel(),
+  adapter: vercel({
+    isr: {
+      // Cache pages for 1 hour, then revalidate in background
+      expiration: 3600,
+    }
+  }),
 
-  site: 'https://www.thewalrusco.net',
+  site: 'https://www.thewalrusco.com',
 
   vite: {
       server: {

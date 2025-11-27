@@ -1,11 +1,6 @@
 {
  "redirects": [
    {
-     "source": "/stories/a-test-story",
-     "destination": "/stories/a-test-story/",
-     "permanent": true
-   },
-   {
      "source": "/story/:slug((?!.*/).*)",
      "destination": "/story/:slug/",
      "permanent": true

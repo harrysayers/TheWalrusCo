@@ -1,24 +1,11 @@
 ---
-import { getCollection } from 'astro:content';
+import { getAllStories } from '../utils/notion';
 
-// Get all stories from Content Collections
-const allStories = await getCollection('stories');
-
-// Helper function to parse date strings like "17th Nov 2025"
-const parseDate = (dateStr: string) => {
-    const cleaned = dateStr.replace(/(\d+)(st|nd|rd|th)/, '$1');
-    return new Date(cleaned);
-};
-
-// Sort by date (newest first)
-const sortedStories = allStories.sort((a, b) => {
-    const dateA = parseDate(a.data.date);
-    const dateB = parseDate(b.data.date);
-    return dateB.getTime() - dateA.getTime();
-});
+// Get all stories from Notion
+const allStories = await getAllStories();
 
 // Get all stories except the first three (which are featured)
-const gridStories = sortedStories.slice(3);
+const gridStories = allStories.slice(3);
 ---
 
 <div class="grid-container">
