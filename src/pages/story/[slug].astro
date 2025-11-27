@@ -30,8 +30,17 @@ try {
 
   // Rewrite asset paths to point to blob storage
   const blobBaseUrl = `https://qwhrs43zjmto7km3.public.blob.vercel-storage.com/story/${slug}`;
-  html = html.replace(/src="\.\//g, `src="${blobBaseUrl}/`);
-  html = html.replace(/href="\.\//g, `href="${blobBaseUrl}/`);
+
+  // Replace all relative paths in attributes (src="./...", href="./...")
+  html = html.replace(/(src|href)="\.\//g, `$1="${blobBaseUrl}/`);
+
+  // Replace all relative paths in strings (including script content, JSON, etc)
+  // This catches "./_next/..." in inline scripts and JSON payloads
+  html = html.replace(/"\.\/_next\//g, `"${blobBaseUrl}/_next/`);
+  html = html.replace(/'\.\/_next\//g, `'${blobBaseUrl}/_next/`);
+
+  // Fix favicon absolute path
+  html = html.replace(/\/favicon\.ico/g, `${blobBaseUrl}/favicon.ico`);
 
   return new Response(html, {
     status: 200,

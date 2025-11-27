@@ -12,7 +12,7 @@ export default defineConfig({
   adapter: vercel({
     isr: {
       // Cache pages for 1 hour, then revalidate in background
-      expiration: 3600,
+      expiration: 900,
     }
   }),
 
