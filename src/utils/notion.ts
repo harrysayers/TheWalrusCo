@@ -130,7 +130,8 @@ export interface Story {
     date: string;
     description: string;
     image: string;
-    standaloneUrl: string; // Always required now
+    standaloneUrl: string; // Proxy URL for launch button
+    blobUrl?: string; // Direct blob URL for fetching content
     hasLandingPage: boolean; // Only option: show landing page or auto-redirect
     featured: boolean;
     content?: string; // Landing page content from Notion
@@ -233,6 +234,7 @@ function transformNotionPage(page: any, content?: string): Story {
       description: getPropertyValue(props.Description, 'rich_text') || '',
       image: getPropertyValue(props.Image, 'url') || '',
       standaloneUrl: getPropertyValue(props.StandaloneURL, 'url') || '',
+      blobUrl: getPropertyValue(props.BlobURL, 'url') || undefined,
       hasLandingPage: getPropertyValue(props.hasLandingPage, 'checkbox') || false,
       featured: getPropertyValue(props.Featured, 'checkbox') || false,
       content: content || undefined

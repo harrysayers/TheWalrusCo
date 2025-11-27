@@ -8,22 +8,30 @@ if (!Astro.url.pathname.endsWith('/')) {
   return Astro.redirect(`/story/${slug}/`, 301);
 }
 
-// Get story metadata from Notion to find its standalone URL
+// Get story metadata from Notion
 const story = await getStoryBySlug(slug);
 
-if (!story || !story.data.standaloneUrl) {
+if (!story) {
   return new Response('Story not found', { status: 404 });
 }
 
-// Fetch the story HTML from Vercel Blob or external URL
+// Construct the blob URL from the slug
+const blobUrl = `https://qwhrs43zjmto7km3.public.blob.vercel-storage.com/story/${slug}/index.html`;
+
+// Fetch the story HTML from Vercel Blob
 try {
-  const response = await fetch(story.data.standaloneUrl);
+  const response = await fetch(blobUrl);
 
   if (!response.ok) {
     return new Response('Story not found', { status: 404 });
   }
 
-  const html = await response.text();
+  let html = await response.text();
+
+  // Rewrite asset paths to point to blob storage
+  const blobBaseUrl = `https://qwhrs43zjmto7km3.public.blob.vercel-storage.com/story/${slug}`;
+  html = html.replace(/src="\.\//g, `src="${blobBaseUrl}/`);
+  html = html.replace(/href="\.\//g, `href="${blobBaseUrl}/`);
 
   return new Response(html, {
     status: 200,
