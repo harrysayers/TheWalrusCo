@@ -12,6 +12,11 @@ if (!story) {
   return Astro.redirect('/404');
 }
 
+// Redirect to standalone URL if no landing page
+if (!story.data.hasLandingPage) {
+  return Astro.redirect(story.data.standaloneUrl);
+}
+
 const entry = story;
 ---
 
@@ -56,39 +61,34 @@ const entry = story;
   <body>
     <Header />
     <main class="story-page">
-      {entry.data.hasLandingPage ? (
-        <!-- Landing page with Notion content -->
-        <div class="tool-landing">
-          <article class="content">
-            <div class="story-header">
-              <div class="meta">
-                <div>
-                  <span class="type">{entry.data.type}</span>
-                  <span class="tag">{entry.data.tag}</span>
-                </div>
-                <span class="date">{entry.data.date}</span>
+      <!-- Landing page with Notion content -->
+      <div class="tool-landing">
+        <article class="content">
+          <div class="story-header">
+            <div class="meta">
+              <div>
+                <span class="type">{entry.data.type}</span>
+                <span class="tag">{entry.data.tag}</span>
               </div>
-              <h1>{entry.data.title}</h1>
-              <p class="description">{entry.data.description}</p>
+              <span class="date">{entry.data.date}</span>
             </div>
+            <h1>{entry.data.title}</h1>
+            <p class="description">{entry.data.description}</p>
+          </div>
 
-            <div class="hero">
-              <img src={entry.data.image} alt={entry.data.title} />
-            </div>
+          <div class="hero">
+            <img src={entry.data.image} alt={entry.data.title} />
+          </div>
 
-            <a href={entry.data.standaloneUrl} class="launch-button">
-              Launch {entry.data.type} →
-            </a>
+          <a href={entry.data.standaloneUrl} class="launch-button">
+            Launch {entry.data.type} →
+          </a>
 
-            {entry.data.content && (
-              <div class="landing-content" set:html={entry.data.content.replace(/\n/g, '<br/>')} />
-            )}
-          </article>
-        </div>
-      ) : (
-        <!-- Auto-redirect directly to tool (no landing page) -->
-        <meta http-equiv="refresh" content={`0; url=${entry.data.standaloneUrl}`} />
-      )}
+          {entry.data.content && (
+            <div class="landing-content" set:html={entry.data.content.replace(/\n/g, '<br/>')} />
+          )}
+        </article>
+      </div>
     </main>
 
     <Footer />
